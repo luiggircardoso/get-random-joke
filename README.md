@@ -4,4 +4,4 @@
 
 ---
 
-"Get Random Joke" is a small Raycast extension that uses the JokeAPI to fetch jokes and deliver them to you.
+"Get Random Joke" is a small Raycast extension that uses the JokeAPI to fetch jokes and deliver them to you. Made 100% in Windows.

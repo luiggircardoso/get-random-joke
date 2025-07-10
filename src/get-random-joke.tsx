@@ -47,17 +47,17 @@ export default function Command() {
     fetchJoke();
   }, [fetchJoke]);
 
-return (
+  return (
     <Detail
-        isLoading={isLoading}
-        markdown={joke ? `## ${joke}` : "Loading joke..."}
-        navigationTitle="Random Joke"
-        actions={
-            <ActionPanel>
-                <Action.CopyToClipboard title="Copy Joke" content={joke || "No joke available"} />
-                <Action title="Re-roll Joke" icon={Icon.Repeat} onAction={fetchJoke} />
-            </ActionPanel>
-        }
+      isLoading={isLoading}
+      markdown={joke ? `## ${joke}` : "Loading joke..."}
+      navigationTitle="Random Joke"
+      actions={
+        <ActionPanel>
+          <Action.CopyToClipboard title="Copy Joke" content={joke || "No joke available"} />
+          <Action title="Re-roll Joke" icon={Icon.Repeat} onAction={fetchJoke} />
+        </ActionPanel>
+      }
     />
-);
+  );
 }

@@ -2,7 +2,7 @@ import { Detail, ActionPanel, Action, Icon, showToast, Toast } from "@raycast/ap
 import { useEffect, useState, useCallback } from "react";
 
 const API_URL =
-  "https://v2.jokeapi.dev/joke/Programming,Miscellaneous,Pun?blacklistFlags=nsfw,religious,political,racist,sexist,explicit";
+  "https://v2.jokeapi.dev/joke/Programming,Miscellaneous,Pun?blacklistFlags=nsfw,racist,sexist,explicit,religious,political";
 
 type JokeResponse = {
   category?: string;
@@ -25,10 +25,9 @@ export default function Command() {
       const data: JokeResponse = await response.json();
       let jokeText = "";
       if (data.type === "twopart") {
-        jokeText = `${data.setup}\n\n${data.delivery}`;
+        jokeText = `<div align="center">\n\n<h2>${data.setup}</h2>\n\n<h3>${data.delivery}</h3>\n\n</div>`;
       } else if ("joke" in data) {
-        // @ts-expect-error not all responses have a joke property
-        jokeText = data.joke;
+        jokeText = `<div align="center">\n\n<h2>${data.joke}</h2>\n\n</div>`;
       }
       setJoke(jokeText);
     } catch (error) {
@@ -50,11 +49,17 @@ export default function Command() {
   return (
     <Detail
       isLoading={isLoading}
-      markdown={joke ? `## ${joke}` : "Loading joke..."}
+      markdown={joke ? joke : "Loading joke..."}
       navigationTitle="Random Joke"
       actions={
         <ActionPanel>
-          <Action.CopyToClipboard title="Copy Joke" content={joke || "No joke available"} />
+          <Action.CopyToClipboard
+            title="Copy Joke"
+            content={joke || "No joke available"}
+            onCopy={() =>
+              showToast({ style: Toast.Style.Success, title: "Copied!", message: "Joke copied to clipboard" })
+            }
+          />
           <Action title="Re-roll Joke" icon={Icon.Repeat} onAction={fetchJoke} />
         </ActionPanel>
       }
